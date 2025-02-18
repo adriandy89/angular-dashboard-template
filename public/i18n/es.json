@@ -1,0 +1,30 @@
+{
+  "en": "Inglés",
+  "es": "Español",
+  "fr": "Francés",
+  "ru": "Ruso",
+  "dark": "Oscuro",
+  "light": "Claro",
+  "system": "Sistema",
+  "auth": {
+    "confirm": "Confirmar contraseña",
+    "email": "Correo electrónico",
+    "forgot": "¿Olvidaste tu contraseña?",
+    "member": "¿No eres miembro?",
+    "login": "Iniciar sesión",
+    "password": "Contraseña",
+    "remember": "Recuérdame",
+    "register": "Registrarse",
+    "reset": "Restablecer contraseña",
+    "signin": "Iniciar sesión",
+    "signup": "Regístrate",
+    "errors": {
+      "email": "Correo electrónico es requerido",
+      "invalid": "Debe ser una dirección de correo electrónico válida",
+      "password": "Contraseña es requerida",
+      "confirm": "Confirmación de contraseña es requerida",
+      "passwords": "Las contraseñas deben coincidir",
+      "min": "La contraseña debe tener al menos 6 caracteres"
+    }
+  }
+}
