@@ -46,7 +46,7 @@ import { AppBgAnimation } from '../../layout/component/app.bg-animation';
           style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)"
         >
           <div
-            class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 shadow-lg"
+            class="w-full bg-surface-0 dark:bg-surface-900 py-12 px-8 sm:px-12 shadow-lg"
             style="border-radius: 53px"
           >
             <div class="text-center mb-8">
@@ -161,7 +161,7 @@ import { AppBgAnimation } from '../../layout/component/app.bg-animation';
               </div>
 
               <p-button
-                styleClass="w-full"
+                styleClass="w-full min-h-10"
                 type="submit"
                 [disabled]="authStore.isLoading()"
                 [loading]="authStore.isLoading()"

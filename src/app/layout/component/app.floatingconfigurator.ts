@@ -18,7 +18,7 @@ import { of } from 'rxjs';
     TranslatePipe,
   ],
   template: `
-    <div class="fixed flex gap-4 top-6 right-6">
+    <div class="fixed flex gap-4 top-6 right-6 z-50">
       <div class="relative">
         <p-button
           [rounded]="true"
