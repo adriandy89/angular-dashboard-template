@@ -16,6 +16,7 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { AuthStore } from '../../store/auth.store';
+import { AppBgAnimation } from '../../layout/component/app.bg-animation';
 
 @Component({
   selector: 'app-login',
@@ -32,13 +33,15 @@ import { AuthStore } from '../../store/auth.store';
     CommonModule,
     TranslateModule,
     ReactiveFormsModule,
+    AppBgAnimation,
   ],
   template: `
     <app-floating-configurator />
+    <app-bg-animation></app-bg-animation>
     <div
-      class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
+      class="bg-opacity-30 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
     >
-      <div class="flex flex-col items-center justify-center">
+      <div class="flex flex-col items-center justify-center opacity-90">
         <div
           style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)"
         >
@@ -161,29 +164,9 @@ import { AuthStore } from '../../store/auth.store';
                 styleClass="w-full"
                 type="submit"
                 [disabled]="authStore.isLoading()"
+                [loading]="authStore.isLoading()"
               >
-                @if (authStore.isLoading()) {
-                <svg
-                  class="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    class="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                } @else {
+                @if (!authStore.isLoading()) {
                 <span>
                   {{ 'auth.login' | translate }}
                 </span>
@@ -195,7 +178,7 @@ import { AuthStore } from '../../store/auth.store';
               {{ 'auth.member' | translate }}
               <a
                 routerLink="/auth/signup"
-                class="font-semibold text-indigo-600 hover:text-indigo-500"
+                class="font-semibold hover:opacity-75 cursor-pointer text-primary"
               >
                 {{ 'auth.register' | translate }}
               </a>
