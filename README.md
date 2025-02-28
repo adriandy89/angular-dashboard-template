@@ -4,6 +4,8 @@ This project serves as a foundational template that demonstrates the interaction
 
 ![Frontend](./example.png)
 
+![Dashboard](./example2.png)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2.
 
 ## Install dependencies
