@@ -9,6 +9,7 @@ import { AppLanguage } from './app.language';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
+import { AppStore } from '../../store/app.store';
 
 @Component({
   selector: 'app-topbar',
@@ -124,17 +125,20 @@ import { of } from 'rxjs';
 
       <div class="layout-topbar-menu hidden lg:block">
         <div class="layout-topbar-menu-content">
-          <button type="button" class="layout-topbar-action">
+          <!-- <button type="button" class="layout-topbar-action">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
-          </button>
+          </button> -->
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-inbox"></i>
             <span>Messages</span>
           </button>
-          <button type="button" class="layout-topbar-action">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
+          <button type="button" class="layout-topbar-action"
+            [disabled]="this.appStore.isLoading()"
+            (click)="logout()"
+          >
+            <i class="pi pi-sign-out"></i>
+            <span>Logout</span>
           </button>
         </div>
       </div>
@@ -144,18 +148,25 @@ import { of } from 'rxjs';
 export class AppTopbar {
   items!: MenuItem[];
 
+  readonly appStore = inject(AppStore);
+  readonly loading = this.appStore.isLoading;
   private translateService = inject(TranslateService);
   readonly currentLang = toSignal(of(this.translateService));
   getLangIcon(lang: string): string {
     return `/icons/${lang}.png`;
   }
 
-  constructor(public layoutService: LayoutService) {}
+  constructor(public layoutService: LayoutService) { }
 
   toggleDarkMode() {
     this.layoutService.layoutConfig.update((state) => ({
       ...state,
       darkTheme: !state.darkTheme,
     }));
+  }
+
+
+  async logout() {
+    await this.appStore.logout();
   }
 }

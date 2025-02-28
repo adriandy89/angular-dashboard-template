@@ -20,8 +20,8 @@ import {
   Customer,
   CustomerService,
   Representative,
-} from '../service/customer.service';
-import { Product, ProductService } from '../service/product.service';
+} from '../../services/customer.service';
+import { Product, ProductService } from '../../services/product.service';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -659,7 +659,7 @@ export class TableBase implements OnInit {
   constructor(
     private customerService: CustomerService,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.customerService.getCustomersLarge().then((customers) => {

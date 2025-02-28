@@ -6,25 +6,33 @@
   "dark": "Dark",
   "light": "Light",
   "system": "System",
+  "welcome": "Welcome",
   "auth": {
+    "loginSuccess": "Login successful",
+    "registerSuccess": "Registration successful",
     "confirm": "Confirm password",
     "email": "Email",
     "forgot": "Forgot password?",
     "login": "Login",
     "member": "Not a member?",
     "password": "Password",
+    "confirmPassword": "Confirm password",
     "remember": "Remember me",
     "register": "Register",
     "reset": "Reset password",
     "signin": "Sign in",
     "signup": "Sign up",
     "errors": {
+      "loginFailed": "Login failed",
+      "registerFailed": "Registration failed",
       "email": "Email is required",
       "invalid": "Email must be a valid email address",
       "password": "Password is required",
       "confirm": "Password confirmation is required",
       "passwords": "Passwords must match",
-      "min": "Password must be at least 6 characters long"
+      "min": "Password must be at least 8 characters long",
+      "max": "Password must be at most 32 characters long",
+      "pattern": "Password must contain at least one letter, one number and special character"
     }
   }
 }

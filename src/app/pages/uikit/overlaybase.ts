@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
-import { Product, ProductService } from '../service/product.service';
+import { Product, ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-overlay-base',
@@ -266,7 +266,7 @@ export class OverlayBase implements OnInit {
     private productService: ProductService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.productService

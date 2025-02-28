@@ -1,12 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthStore } from '../store/auth.store';
+import { AppStore } from '../store/app.store';
 
 export const dashboardGuard: CanActivateFn = () => {
-  const authStore = inject(AuthStore);
+  const appStore = inject(AppStore);
   const router = inject(Router);
-  console.log(!authStore.user());
-  if (!authStore.user()) {
+  if (!appStore.isLoggedIn()) {
     router.navigate(['/auth/login']);
     return false; // Redirige al login si no está autenticado
   }

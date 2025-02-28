@@ -6,6 +6,7 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { authGuard } from './app/guards/auth.guard';
 import { dashboardGuard } from './app/guards/dashboard.guard';
+import { AuthLayout } from './app/layout/component/app.authlayout';
 
 export const appRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ export const appRoutes: Routes = [
   { path: 'notfound', component: Notfound, canActivate: [dashboardGuard] },
   {
     path: 'auth',
+    component: AuthLayout,
     loadChildren: () => import('./app/pages/auth/auth.routes'),
     canActivate: [authGuard],
   },

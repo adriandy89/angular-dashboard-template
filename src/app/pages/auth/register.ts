@@ -14,10 +14,11 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { IRegisterUser } from '../../models';
 import { AuthStore } from './store/auth.store';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [
     ButtonModule,
@@ -32,8 +33,8 @@ import { AuthStore } from './store/auth.store';
     TranslateModule,
   ],
   template: `
-    @let isPending = authStore.isPending();
-    <div
+          @let isPending = authStore.isPending();
+          <div
             class="w-full bg-surface-0 dark:bg-surface-900 py-12 px-8 sm:px-12 shadow-lg"
             style="border-radius: 53px"
           >
@@ -77,12 +78,12 @@ import { AuthStore } from './store/auth.store';
                 NgRx-Signals
               </div>
               <span class="text-muted-color font-medium">{{
-                'auth.signin' | translate
+                'auth.signup' | translate
               }}</span>
             </div>
 
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <div class="text-red-500 font-medium text-center w-full h-8 pb-2">{{
+            <div class="text-red-500 font-medium text-center w-full h-8 pb-2">{{
                 authStore.error() ?? '' | translate
               }}</div>
               <div class="mb-8">
@@ -111,7 +112,7 @@ import { AuthStore } from './store/auth.store';
                 }
               </div>
 
-              <div class="mb-4">
+              <div class="mb-8">
                 <label
                   for="password1"
                   class="block text-surface-900 dark:text-surface-0 pl-1 font-medium mb-2"
@@ -120,7 +121,7 @@ import { AuthStore } from './store/auth.store';
                 <p-password
                   id="password1"
                   formControlName="password"
-                  autocomplete="current-password"
+                  autocomplete="new-password"
                   placeholder="Password"
                   [toggleMask]="true"
                   [fluid]="true"
@@ -131,24 +132,44 @@ import { AuthStore } from './store/auth.store';
                   @if (f['password'].errors['required']) {<span>
                     {{ 'auth.errors.password' | translate }}</span
                   >}
+                  @if (f['password'].errors['minlength']) {<span>
+                    {{ 'auth.errors.min' | translate }}</span
+                  >}
+                  @if (f['password'].errors['maxlength']) {<span>
+                    {{ 'auth.errors.max' | translate }}</span
+                  >}
+                  @if (f['password'].errors['pattern']) {<span>
+                    {{ 'auth.errors.pattern' | translate }}</span
+                  >}
                 </div>
                 }
               </div>
 
-              <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                <div class="flex items-center">
-                  <!-- <p-checkbox
-                    formControlName="remember"
-                    id="rememberme1"
-                    binary
-                    class="mr-2"
-                  ></p-checkbox>
-                  <label for="rememberme1">Remember me</label> -->
-                </div>
-                <span
-                  class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
-                  >{{ 'auth.forgot' | translate }}</span
+              <div class="mb-4">
+                <label
+                  for="confirmPassword"
+                  class="block text-surface-900 dark:text-surface-0 pl-1 font-medium mb-2"
+                  >{{ 'auth.confirmPassword' | translate }}</label
                 >
+                <p-password
+                  id="confirmPassword"
+                  formControlName="confirmPassword"
+                  autocomplete="new-password"
+                  placeholder="Confirm Password"
+                  [toggleMask]="true"
+                  [fluid]="true"
+                  [feedback]="false"
+                ></p-password>
+                @if (submitted() && f['confirmPassword'].errors) {
+                <div class="text-red-400 text-xs p-2">
+                  @if (f['confirmPassword'].errors['required']) {<span>
+                    {{ 'auth.errors.password' | translate }}</span
+                  >}
+                  @if (f['confirmPassword'].errors['mismatch']) {<span>
+                    {{ 'auth.errors.passwords' | translate }}</span
+                  >}
+                </div>
+                }
               </div>
 
               <p-button
@@ -159,25 +180,24 @@ import { AuthStore } from './store/auth.store';
               >
                 @if (!isPending) {
                 <span>
-                  {{ 'auth.login' | translate }}
+                  {{ 'auth.register' | translate }}
                 </span>
                 }</p-button
               >
             </form>
 
             <p class="mt-8 text-center font-medium text-gray-500">
-              {{ 'auth.member' | translate }}
               <a
-                routerLink="/auth/register"
+                routerLink="/auth/login"
                 class="font-semibold hover:opacity-75 cursor-pointer text-primary"
               >
-                {{ 'auth.register' | translate }}
+                {{ 'auth.login' | translate }}
               </a>
             </p>
           </div>
   `,
 })
-export class Login {
+export class Register {
   readonly authStore = inject(AuthStore);
   readonly router = inject(Router);
   loginForm!: FormGroup;
@@ -185,19 +205,29 @@ export class Login {
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      username: ['admin@test.com', [Validators.required, Validators.email]],
-      password: ['As-12345', Validators.required],
-      // remember: [false],
-    });
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(32),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,32}$/)
+      ]],
+      confirmPassword: ['', Validators.required],
+    }, { validator: this.passwordMatchValidator });
     this.authStore.requestClearRequest();
     effect(() => {
-      if (this.authStore.isLoggedIn()) {
-        this.router.navigate(['/']);
+      if (this.authStore.isFulfilled() && this.submitted()) {
+        this.router.navigate(['/auth/login']);
         // Reset the form after successful submission (optional)
         this.loginForm.reset();
         this.submitted.set(false);
       }
     });
+  }
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')!.value === form.get('confirmPassword')!.value
+      ? null : { mismatch: true };
   }
 
   get f() {
@@ -209,7 +239,11 @@ export class Login {
     if (this.loginForm.invalid) {
       return;
     }
-    // Handle form submission here (e.g., API call)
-    this.authStore.login(this.loginForm.value);
+    const data: IRegisterUser = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+    };
+    // Handle form submission
+    this.authStore.register(data);
   }
 }

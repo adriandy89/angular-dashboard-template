@@ -6,13 +6,19 @@
   "dark": "Sombre",
   "light": "Clair",
   "system": "Système",
+  "welcome": "Bienvenue",
   "auth": {
+    "loginSuccess": "Connexion réussie",
+    "registerSuccess": "Inscription réussie",
+    "loginFailed": "Échec de la connexion",
+    "registerFailed": "Échec de l'inscription",
     "confirm": "Confirmer le mot de passe",
     "email": "Email",
     "forgot": "Mot de passe oublié ?",
     "login": "Connexion",
     "member": "Pas encore membre ?",
     "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
     "remember": "Se souvenir de moi",
     "register": "S'inscrire",
     "reset": "Réinitialiser le mot de passe",
@@ -24,7 +30,9 @@
       "password": "Mot de passe est requis",
       "confirm": "La confirmation du mot de passe est requise",
       "passwords": "Les mots de passe doivent correspondre",
-      "min": "Le mot de passe doit comporter au moins 6 caractères"
+      "min": "Le mot de passe doit comporter au moins 8 caractères",
+      "max": "Le mot de passe doit comporter au maximum 32 caractères",
+      "pattern": "Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial"
     }
   }
 }

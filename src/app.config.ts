@@ -23,9 +23,11 @@ import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
-import { AuthStore } from './app/store/auth.store';
+import { AppStore } from './app/store/app.store';
+import { MessageService } from 'primeng/api';
+import { NotificationService } from './app/services/notification.service';
 
-const appInitializer = (authStore: AuthStore) => authStore.checkSession();
+const appInitializer = (appStore = inject(AppStore)) => appStore.checkSession();
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -56,7 +58,8 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } },
     }),
-    { provide: AuthStore, useClass: AuthStore, deps: [] },
-    provideAppInitializer(() => appInitializer(inject(AuthStore))),
+    { provide: MessageService, useClass: MessageService },
+    { provide: NotificationService, useClass: NotificationService },
+    provideAppInitializer(() => appInitializer()),
   ],
 };

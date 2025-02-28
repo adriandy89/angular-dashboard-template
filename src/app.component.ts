@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, TranslateModule],
-  template: `<router-outlet></router-outlet>`,
+  imports: [RouterModule, TranslateModule, ToastModule],
+  template: `
+    <p-toast />
+    <router-outlet></router-outlet>
+  `,
 })
 export class AppComponent {
   constructor(private translate: TranslateService) {

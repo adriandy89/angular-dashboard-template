@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { PrimeNG } from 'primeng/config';
 import { LayoutService } from '../service/layout.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { CountryService } from '../../pages/service/country.service';
-import { NodeService } from '../../pages/service/node.service';
+import { CountryService } from '../../services/country.service';
+import { NodeService } from '../../services/node.service';
 
 @Component({
   selector: 'app-language',

@@ -6,13 +6,19 @@
   "dark": "Oscuro",
   "light": "Claro",
   "system": "Sistema",
+  "welcome": "Bienvenido",
   "auth": {
+    "loginSuccess": "Inicio de sesión exitoso",
+    "registerSuccess": "Registro exitoso",
+    "loginFailed": "Inicio de sesión fallido",
+    "registerFailed": "Registro fallido",
     "confirm": "Confirmar contraseña",
     "email": "Correo electrónico",
     "forgot": "¿Olvidaste tu contraseña?",
     "member": "¿No eres miembro?",
     "login": "Iniciar sesión",
     "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
     "remember": "Recuérdame",
     "register": "Registrarse",
     "reset": "Restablecer contraseña",
@@ -24,7 +30,9 @@
       "password": "Contraseña es requerida",
       "confirm": "Confirmación de contraseña es requerida",
       "passwords": "Las contraseñas deben coincidir",
-      "min": "La contraseña debe tener al menos 6 caracteres"
+      "min": "La contraseña debe tener al menos 8 caracteres",
+      "max": "La contraseña debe tener como máximo 32 caracteres",
+      "pattern": "La contraseña debe contener al menos una letra, un número y un carácter especial"
     }
   }
 }
